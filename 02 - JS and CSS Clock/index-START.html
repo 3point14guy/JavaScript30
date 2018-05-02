@@ -12,6 +12,7 @@
         <div class="hand hour-hand"></div>
         <div class="hand min-hand"></div>
         <div class="hand second-hand"></div>
+        <div class="center"></div>
       </div>
     </div>
 
@@ -56,18 +57,77 @@
       transform: translateY(-3px); /* account for the height of the clock hands */
     }
 
+    .center {
+      width: 12px;
+      height: 12px;
+      background-color: black;
+      border-radius: 50%;
+      top: 49%;
+      left: 48%;
+      position: relative;
+
+    }
+
     .hand {
       width:50%;
       height:6px;
       background:black;
       position: absolute;
       top:50%;
+      /* transform rotate would normally rotate around center of axis...transform-origin makes it rotate around it's end-point */
+      transform-origin: 100%;
+      /* divs start from left to right. without rotating 90 degress from the start, the hand will be starting at 270 degrees instead of 360 */
+      transform:rotate(90deg);
+      /* sets speed of transition from one position to the next */
+      transition: all 0.05s;
+      /* sets movement type when transition occurs */
+      transition-timing-function: ease-in-out;
+    }
+/* shortens hour hand */
+    .hour-hand {
+      width:35%;
+      left: 15%;
+    }
+/* makes second hand thinner */
+    .second-hand {
+      height: 3px;
     }
 
   </style>
 
   <script>
+  const secondHand = document.querySelector('.second-hand');
+  const minuteHand = document.querySelector('.min-hand');
+  const hourHand = document.querySelector('.hour-hand');
 
+
+    function setDate() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const secondsDegrees = ((seconds / 60) * 360) + 90;
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+
+      const minutes = now.getMinutes();
+      const minutesDegrees = ((minutes / 60) * 360) + 90;
+      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
+
+      const hour = now.getHours();
+      let hourDegrees = 0
+        if (minutes <= 15) {
+          hourDegrees = ((hour / 12) * 360) + 90;
+        } else if (minutes > 15 && minutes <= 30) {
+          hourDegrees = ((hour / 12) * 360) + 93;
+        } else if (minutes > 30 && minutes <= 45) {
+          hourDegrees = ((hour / 12) * 360) + 98;
+        } else {
+          hourDegrees = ((hour / 12) * 360) + 103;
+        }
+
+      hourHand.style.transform = `rotate(${hourDegrees}deg)`;
+      console.log(hour + ":" + minutes + ":" + seconds);
+    }
+    // causes setDate function to run every second
+    setInterval(setDate, 1000)
 
   </script>
 </body>
