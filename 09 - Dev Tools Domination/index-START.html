@@ -20,27 +20,60 @@
     // Regular
 
     // Interpolated
-
+console.log('Hello I am a %s string!', '😄');
     // Styled
-
+console.log('%c I am some great text', 'font-size:50px');
     // warning!
-
+console.warn('oh nooo!');
     // Error :|
+console.error('Zoikes');
 
     // Info
-
+    // *** not in chrome??
+console.info("gives the li'l info icon ");
     // Testing
-
+    // *** will not display anythng if true. 2nd argument is message if false
+console.assert(1 === 1, 'that is wrong!');
     // clearing
-
+console.clear();
     // Viewing DOM Elements
+    // *** will allow you to get all the methods and properties of the
+const p = document.querySelector('p');
+    console.log(p);
+    console.dir(p);
+    console.dir(p);
 
-    // Grouping together
+    // Grouping together using data set above
+    // *** can also use console.groupCollapsed which defaults to all the logs within the group being collapsed by default instead of expanded by default
+    dogs.forEach(dog => {
+      console.group(`${dog.name}`);
+      console.log(`This is ${dog.name}`);
+      console.log(`${dog.name} is ${dog.age} years old`);
+      console.log(`${dog.name} is ${dog.age * 7} years old`);
+      console.groupEnd(`${dog.name}`);
+    });
 
     // counting
-
+console.count('Nick');
+console.count('Thea');
+console.count('Thea');
+console.count('Nick');
+console.count('Nick');
+console.count('Thea');
+console.count('Nick');
+console.count('Thea');
+console.count('Nick');
+console.count('Nick');
+console.count('Nick');
     // timing
-
+    // *** how long does a task take
+console.time('fetching data');
+fetch('https://api.github.com/users/wesbos')
+  .then(data => data.json())
+  .then(data => {
+    console.timeEnd('fetching data');
+    console.log(data);
+  });
   </script>
 </body>
 </html>
