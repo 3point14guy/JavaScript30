@@ -182,6 +182,39 @@
     </li>
   </ul>
 <script>
+
+  // timeNodes is actually a NodeList at this point in the code not an array
+  // const timeNodes = document.querySelectorAll('[data-time]');
+
+  // there are two ways to do this.  1st you can spread into an Array:
+  // const timeNodes = [...document.querySelectorAll('[data-time]')];
+
+  // or you can use the Array object method:
+  const timeNodes = Array.from(document.querySelectorAll('[data-time]'));
+
+  // now we are able to use .map to get our time data
+  const seconds = timeNodes
+    .map(node => node.dataset.time)
+    .map(timeCode => {
+      // split is a string method; our mins and secs are strings; we cant add them yet.  if we map the parseFloat function against everything returned by the split, we will have integers again
+      const [mins, secs] = timeCode.split(":").map(parseFloat);
+      return (mins * 60) + secs;
+    }).reduce((total, vidSeconds) => total + vidSeconds);
+
+    let secondsLeft = seconds;
+    const hours = Math.floor(secondsLeft / 3600);
+    secondsLeft = secondsLeft % 3600;
+
+    const minutes = Math.floor(secondsLeft / 60);
+    secondsLeft = secondsLeft % 60;
+
+    const totalTime = `${hours}:${minutes}:${secondsLeft}`;
+    console.log(totalTime);
+
+
+
+
+
 </script>
 </body>
 </html>
