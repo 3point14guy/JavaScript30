@@ -37,8 +37,50 @@
   }
 </style>
 
-<button></button>
+<button>submit</button>
 <script>
+  const divs = document.querySelectorAll('div');
+  const button = document.querySelector('button');
+
+  //1 and 3
+  function  logText(e) {
+    console.log(this.classList.value);
+  }
+  // 2
+  function  logText(e) {
+    console.log(this.classList.value);
+    // also have .stopPropogation
+    // will stop on capture or bubble depending on if capture is set to true or false in the event listener
+    e.stopPropogation();
+  }
+  // 1
+  divs.forEach(div => div.addEventListener('click', logText));
+  // when you click on the innermost div, logText will log the class names of the parent divs because of "bubbling"
+  // the capture of events starts at the outermost div and works it's way down to the selected div
+  // the events are triggered as you bubble up
+
+  // 2
+  // can pass a third option of capture: true.  this will cause the event to be triggered on the capture instead of the bubble
+  // false is default
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: true
+  }));
+
+  //3
+  // another option is once: true.  it will unbind itself after the 1st click event
+  // would not need to use with stopPropogation
+  // false is default
+
+  divs.forEach(div => div.addEventListener('click', logText, {
+    capture: true,
+    once: true
+  }));
+  button.addEventListener('click', () => {
+    console.log("clicked");
+  }, {
+    once: true
+  })
+
 
 </script>
 </body>

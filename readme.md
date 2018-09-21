@@ -1,3 +1,8 @@
+This repo has my code from the code alongs in JavaScript30 by Wes Boss.
+
+My code has been added to the index-START.html in the respective daily challenge directories.  Most of the time, HTML and CSS code was already provided.
+
+
 ![](https://javascript30.com/images/JS3-social-share.png)
 
 # JavaScript30
